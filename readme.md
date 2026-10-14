@@ -240,3 +240,224 @@ class Test{
 }
 
 ```
+
+## Logical operators
+```java 
+class Test{
+    public static void main(String[] args){
+        // Relational Operators
+            // < > == != 
+        
+        // Logical Operators
+            // and &&, or ||, not !
+
+        // Conditional
+
+        if(1<2){
+            System.out.println("if block executed");
+        }
+        else if(1>0){
+            System.out.println("else if block executed");
+        }
+        else{
+            System.out.println("else block executed");
+        }
+
+
+
+        // Switch Case 
+        // - always use the break statement to break the flow if middle becomes true
+        // - Without {} backets only allow one line statement 
+        int day = 7;
+        switch(day){
+            case 1:{
+                System.out.println("Monday");
+                break;
+            }
+            case 2:{
+                System.out.println("Tuesday");
+                break;
+            }
+            case 3:{
+                System.out.println("Wednesday");
+                break;
+            }
+            case 4:{
+                System.out.println("Thursday");
+                break;
+            }
+            case 5:{
+                System.out.println("Friday");
+                break;
+            }
+            case 6:{
+                System.out.println("Saturday");
+                break;
+            }
+            case 7:{
+                System.out.println("Sunday");
+                break;
+            }
+            default:{
+                System.out.println("Incorrect day");
+            }
+        }
+    }
+}
+```
+
+## Loops
+
+```java
+class Test{
+    public static void main(String[] args){
+        // While loop
+        int i = 0;
+        while(i<10){
+            System.out.println(i);
+            i++;
+        }
+
+        // do while
+        do{
+            System.out.println(i);
+            i++;
+        }while(i<10);
+
+        // for loop
+        for(int j = 0; j<10; j++){
+            System.out.println(j);
+        }
+
+        // Problem-1
+        /*
+            1
+            10
+            100
+            1000
+            10000
+            100000
+        */
+        for(int i=1;i<=100000;i*=10){
+            System.out.println(i);
+        }
+
+        /*
+            *
+            **
+            ***
+            ****
+            *****
+        */
+        for(int i=0;i<5;i++){
+            for(int j=0;j<=i;j++){
+                System.out.print('*');
+            }
+            System.out.println();
+        }
+
+        for(int i=0;i<10;i++){
+            if(i==5) break;
+            System.out.println(i);
+        }
+
+        /*
+            0
+            1
+            2
+            3
+            4
+        */
+
+       for(int i=0;i<10;i++){
+            if(i==5) continue;
+            System.out.println(i);
+        }
+
+        /*
+            0
+            1
+            2
+            3
+            4
+            6
+            7
+            8
+            9
+        */
+
+    }
+}
+```
+
+## Arrays
+```java
+class Test{
+    public static void main(String[] args){
+        // - bydeafult assigned with zero value
+        int[] arr = new int[10];
+        arr[3] = 45;
+        for(int i=0;i<arr.length;i++){
+            System.out.println(arr[i]);
+        }
+        /*
+            0
+            0
+            0
+            45
+            0
+            0
+            0
+            0
+            0
+            0
+        */
+
+        int[] arr1 = {1,2,3};
+        System.out.println(arr1);
+        // [I@7ad041f3 --> [ = array, I = Integer, @7ad041f3 = #Code
+            
+        for(int i:arr1){
+            System.out.println(i);
+        }
+        
+        int[][] arr2 = new int[3][3];
+        int[][] arr3 = {
+            {1, 2, 3},
+            {1, 2, 3},
+            {1, 2, 3}
+        };
+
+        for(int i=0; i<arr3.length; i++){
+            for(int j=0; j<arr3[i].length; j++){
+                System.out.print(arr3[i][j]);
+            }
+            System.out.println();
+        }
+        /*
+            123
+            123
+            123
+        */
+
+        for(int[] i:arr3){
+            for(int j:i){
+                System.out.print(j);
+            }
+            System.out.println();
+        }
+        /*
+            123
+            123
+            123
+        */
+
+        int[][] zarr = new int[3][];
+        zarr[0] = new int[2];
+        zarr[1] = new int[3];
+        zarr[2] = new int[2];
+            
+
+    }
+}
+```
