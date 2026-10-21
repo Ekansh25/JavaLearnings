@@ -461,3 +461,115 @@ class Test{
     }
 }
 ```
+![Image description](/public/4.png)
+![Image description](/public/5.png)
+
+## OOP's
+
+![Image description](/public/6.png)
+
+```java
+public class Car{
+    public String color;
+    public String brand;
+    public String model;
+    private int year;
+    private int speed;
+
+    public int getSpeed(){
+        return this.speed;
+    }
+
+    public void setSpeed(int newSpeed){
+        this.speed+=newSpeed;
+    }
+
+    public void applyBreak(int applybreak){
+        this.speed-=applybreak;
+    }
+
+}
+```
+
+```java
+
+class Test{
+    public static void main(String[] args){
+        Car car1 = new Car();
+        car1.brand = "Maruti";
+        car1.model = "Road phaad denge choree";
+        car1.color = "Sky blue";
+        // car1.speed = 120;
+        /*
+            .\Test.java:8: error: speed has private access in Car
+                car1.speed = 120;
+                    ^
+            error
+        */
+
+       car1.setSpeed(120);
+       System.out.println(car1.getSpeed()); // 120
+       car1.applyBreak(10);
+       System.out.println(car1.getSpeed()); // 110
+       
+    }
+}
+```
+
+```java
+public class Animal{
+    String name;
+    int age;
+
+    public void makeSound(){
+        System.out.println("Some Sound");
+    }
+}
+```
+
+```java
+public class Cat extends Animal{    // Inheritance
+    String breed;
+
+    public void makeSound(){
+        System.out.println("Cat Sound");
+    }
+}
+```
+
+```java
+class Test{
+    public static void main(String[] args){
+        Cat cat1 = new Cat();
+        cat1.name = "karan";
+        cat1.age = 65;
+        cat1.breed = "Chutiya";
+        cat1.makeSound();   // Cat Sound
+
+        Animal cat2 = new Cat();    // Polymorphism
+        cat2.makeSound();   // Cat Sound
+        System.out.println(sum(2, 5));
+        
+    }
+
+    public static int sum(int a, int b){
+        return a+b;
+    }
+
+    public static int sum(int a, int b){    // Method overloading
+        return a+b;
+    }
+
+    public static int sum(int a, int b, int c){     // Method overriding
+        return a+b+c;
+    }
+
+    public static int sum(int ...a){    // Method overriding
+        int sum = 0;
+        for(int i: a){
+            sum+=i;
+        }
+        return sum;
+    }
+}
+```
