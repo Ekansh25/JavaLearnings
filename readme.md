@@ -573,3 +573,92 @@ class Test{
     }
 }
 ```
+
+
+## Packages
+
+### Folder `test1`
+```java
+package test1;
+
+public class Lion{
+    public String name;
+    public void makeSound(){
+        System.out.println("Roar");
+    }
+}
+```
+
+### Folder `test2`
+```java
+package test2;
+
+public class Lion{
+    public String name;
+    public void makeSound(){
+        System.out.println("Roar");
+    }
+}
+```
+
+```java
+import test1.*;
+import test2.*;
+
+class Test{
+    public static void main(String[] args){
+        Lion x = new Lion();
+        /*
+            .\Test.java:6: error: reference to Lion is ambiguous
+                    Lion x = new Lion();
+                    ^
+            both class test2.Lion in test2 and class test1.Lion in test1 match
+            .\Test.java:6: error: reference to Lion is ambiguous
+                    Lion x = new Lion();
+                                ^
+            both class test2.Lion in test2 and class test1.Lion in test1 match
+            2 errors
+        */
+        test1.Lion lion1 = new test1.Lion();
+        lion1.name = "Ekansh";
+        lion1.makeSound();
+    }
+}
+```
+
+## Constructor
+```java
+package project.test;
+
+public class Student{
+    String name;
+    int age;
+    int rollNumber;
+
+    // Default constructor
+    public Student(){
+        this.age = 10;
+    }
+
+    // Parameterize constructor
+    public Student(String name, int age, int rollNumber){
+        this.name = name;
+        this.age = age;
+        this.rollNumber = rollNumber;
+    }
+}
+```
+
+```java
+package project.test;
+
+public class Test{
+    public static void main(String[] args){
+        Student std = new Student();
+        System.out.println(std.age);   // 10
+        Student std2 = new Student("Ekansh", 25, 4206);
+        System.out.println(std2.name);  // Ekansh
+        System.out.println(std2.age);  // 25
+    }
+}
+```
