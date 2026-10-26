@@ -1229,6 +1229,182 @@ public class Test{
 ![image description](/public/12.png)
 
 ```java
+public class Test{
+    public static void main(String[] args){
+        int[] numerators = {10, 20, 100, 30};
+        int[] denomerators = {2, 3, 0, 5};
+        for(int i = 0;i<numerators.length;i++){
+            System.out.println(divide(numerators[i], denomerators[i]));
+        }
+    }
+
+    public static int divide(int a, int b){
+        try{
+            return a / b;
+        }catch(ArithmeticException e){
+            System.out.println(e);
+            return -1;
+        }
+    }
+}
+
+/*
+    5
+    6
+    java.lang.ArithmeticException: / by zero
+    -1
+    6
+*/
+```
+
+```java
+public class Test{
+    public static void main(String[] args){
+        int[] numerators = {10, 20, 100, 30};
+        int[] denomerators = {2, 3, 0, 5};
+        for(int i = 0;i<numerators.length;i++){
+            System.out.println(divide(numerators[i], denomerators[i]));
+        }
+    }
+
+    public static int divide(int a, int b){
+        try{
+            return a / b;
+        }catch(ArithmeticException e){
+            System.out.println(e);
+            return -1;
+        }finally{
+            System.out.println("finally block");
+        }
+    }
+}
+
+/*
+    finally block
+    5
+    finally block
+    6
+    java.lang.ArithmeticException: / by zero
+    finally block
+    -1
+    finally block
+    6
+*/
+```
+
+### Add custom exception
+```java
+public class BankAccount{
+    private double balance;
+
+    public BankAccount(double amount){
+        this.balance = amount;
+    }
+
+    public void withdraw(double amount) throws Exception{
+        if(amount < this.balance){
+            this.balance-=amount;
+        }
+        else{
+            throw new Exception("Insufficient balance..");
+        }
+    }
+
+    public double checkBalance(){
+        return this.balance;
+    }
+}
+```
+
+```java
+public class Test{
+    public static void main(String[] args){
+        BankAccount b1 = new BankAccount(500);
+        // b1.withdraw(600);
+        /*
+            .\Test.java:4: error: unreported exception Exception; must be caught or declared to be thrown
+                    b1.withdraw(600);
+                            ^
+            1 error
+        */
+        try{
+            b1.withdraw(600);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        System.out.println(b1.checkBalance());
+        /*
+            java.lang.Exception: Insufficient balance..
+            500.0
+        */
+
+    }
+}
+```
+
+### Create Custom Exceptions
+
+```java
+public class InsufficientFundsException extends Exception{
+    public InsufficientFundsException(){
+        super("Insufficient balance");
+    }
+}
+```
+
+```java
+public class BankAccount{
+    private double balance;
+
+    public BankAccount(double amount){
+        this.balance = amount;
+    }
+
+    public void withdraw(double amount) throws InsufficientFundsException{
+        if(amount < this.balance){
+            this.balance-=amount;
+        }
+        else{
+            throw new InsufficientFundsException();
+        }
+    }
+
+    public double checkBalance(){
+        return this.balance;
+    }
+}
+```
+
+```java
+public class Test{
+    public static void main(String[] args){
+        BankAccount b1 = new BankAccount(500);
+        // b1.withdraw(600);
+        /*
+            .\Test.java:4: error: unreported exception Exception; must be caught or declared to be thrown
+                    b1.withdraw(600);
+                            ^
+            1 error
+        */
+        try{
+            b1.withdraw(600);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        System.out.println(b1.checkBalance());
+        /*
+            InsufficientFundsException: Insufficient balance
+            500.0
+        */
+
+    }
+}
+```
+
+## Wrapper Classes
+- Wrapper classes convert primitive data types into objects
+
+```java
 ```
 
 
