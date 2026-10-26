@@ -662,3 +662,671 @@ public class Test{
     }
 }
 ```
+
+## Inheritance deeply
+- `Animal` -> `Animal.Java`
+```java
+package Animal;
+
+public class Animal{
+    public String name;
+    public int age;
+
+    public Animal(){
+        System.out.println("Parent Constructor");
+    }
+
+}
+```
+
+- `Animal` -> `Cat.Java`
+```java
+package Animal;
+
+public class Cat extends Animal{
+    public String breed;
+
+    public Cat(){
+        // super(); 
+        // Hidden LOS always present to call parent class constructor
+        // And this statement alwasys be the first statement
+        System.out.println("Child Constructor");
+    }
+}
+```
+
+- `MultipleInheritance` -> `Camera.java`
+```java
+package MultipleInheritance;
+
+public class Camera{
+    public void takePicture(){
+        System.out.println("Clicking photo..");
+    }
+
+    public void powerOn(){
+        System.out.println("Turning on..");
+    }
+}
+```
+
+- `MultipleInheritance` -> `MusicPlayer.java`
+```java
+package MultipleInheritance;
+
+public class MusicPlayer{
+    public void playMusic(){
+        System.out.println("Playing Music..");
+    }
+
+    public void powerOn(){
+        System.out.println("Turning on..");
+    }
+}
+```
+
+- `MultipleInheritance` -> `Phone.java`
+```java
+package MultipleInheritance;
+
+public class Phone{
+    public void makeCall(){
+        System.out.println("Calling..");
+    }
+
+    public void powerOn(){
+        System.out.println("Turning on..");
+    }
+}
+```
+
+- `MultipleInheritance` -> `SmartPhone.java`
+```java
+package MultipleInheritance;
+
+public class SmartPhone extends Camera, Phone, MusicPlayer{
+
+}
+/*
+    ./MultipleInheritance/SmartPhone.java:3: error: '{' expected
+    public class SmartPhone extends Camera, Phone, MusicPlayer{
+                                        ^
+    1 error
+*/
+
+// Java doen't support Multiple Inheritance becz it generates ambiguity, to solve this problem support Interface
+```
+- `Test.java`
+```java
+import Animal.*;
+import MultipleInheritance.*;
+
+public class Test{
+    public static void main(String[] args){
+        Cat cat1 = new Cat();
+        /*
+            Parent Constructor
+            Child Constructor
+        */
+    }
+
+    SmartPhone s1 = new SmartPhone();
+    // s1.powerOn();
+}
+```
+
+## Static Methods
+- Static Methods belongs to the class itself rather than an object (instance) of the class.
+
+- `Student` -> `Student.java`
+
+```java
+package Student;
+
+public class Student{
+    public String name;
+    public int age;
+    
+    public void sayHello(){
+        System.out.println("Hello..!");
+    }
+
+    public static void sayBye(){
+        System.out.println("bye..");
+    }
+}n
+```
+
+```java
+import Student.*;
+
+public class Test{
+    public static void main(String[] args){
+        Student std1 = new Student();
+        std1.sayHello();
+        std1.sayBye();
+        
+        Student.sayHello();
+        /*
+        Test.java:9: error: non-static method sayHello() cannot be referenced from a static context
+                Student.sayHello();
+                    ^
+        1 error
+        */
+        Student.sayBye();   // bye..
+    }
+}
+```
+
+## Private Constructor
+- If want there is not object of class can we created.
+
+```java
+package Student;
+
+public class Student{
+    public String name;
+    public int age;
+    
+    private Student(){
+
+    }
+
+    public void sayHello(){
+        System.out.println("Hello..!");
+    }
+
+    public static void sayBye(){
+        System.out.println("bye..");
+    }
+}
+```
+
+```java
+import Student.*;
+
+public class Test{
+    public static void main(String[] args){
+        Student std1 = new Student();
+        /*
+        Test.java:5: error: Student() has private access in Student
+                Student std1 = new Student();
+                            ^
+        1 error
+        */
+
+       Student.sayHello();
+       /*
+       Test.java:13: error: non-static method sayHello() cannot be referenced from a static context
+            Student.sayHello();
+                    ^
+        1 error
+       */
+        
+        Student.sayBye();   // bye..
+    }
+}
+```
+
+- If required only one object can we created of a class (also called as Singleton Patter)
+
+```java
+package Student;
+
+public class Student{
+
+    private static Student oneInstance;
+
+    private Student(){
+
+    }
+
+    public static void getInstance(){
+        if (oneInstance == null){
+            oneInstance = new Student();
+        }
+        return oneInstance;
+    }
+
+}
+```
+
+### Important Note points
+- Class can't be private
+- Protected methods can only be access in extended class
+
+![Image description](/public/7.png)
+
+## Static Keyword
+- Static keyword in java is used for Memory Management primarily.
+- It can be applied on variables, methods, blocks, and nested classes.
+- Static Methods cannot use non-static data members or call non-static method directly.
+- `This` and `super` cannot be used in static context.
+
+```java
+package Student;
+
+public class Student{
+    // static data member
+    private static int count = 0;
+
+    // static block
+    static {
+        System.out.println("static block");
+    }
+
+    public Student(){
+        count++;
+    }
+
+    // static method
+    public static int getCount(){
+        return count;
+    }
+
+}
+```
+
+```java
+import Student.*;
+
+public class Test{
+    public static void main(String[] args){
+        Student std1 = new Student();
+        Student std2 = new Student();
+        Student std3 = new Student();
+        Student std4 = new Student();
+        System.out.println(Student.getCount());
+        /*
+            static block
+            4
+        */
+    }
+}
+```
+## Final keyword
+- `Final` data members value cannot be changed
+- `Final` methods cannot be override
+- `Final` classes cannot be extend
+
+```java
+package Vehicles;
+
+public class Car{
+
+    private final int accelerate = 200;
+
+    public void changeSpeed(int x){
+        accelerate = x;
+        /*
+        ./Vehicles/Car.java:8: error: cannot assign a value to final variable accelerate
+                accelerate = x;
+                ^
+        1 error
+        */
+    }
+
+    public int getSpeed(){
+        return accelerate;
+    }
+
+    public final void airBags(){
+        System.out.println("4 air bags..");
+    }
+}
+```
+
+```java
+package Vehicles;
+
+public class EvCar extends Car{
+    @Override
+    public void airBags(){
+        System.out.println("2 air bags..");
+    }
+    /*
+    Exception in thread "main" java.lang.IncompatibleClassChangeError: class Vehicles.EvCar overrides final method Vehicles.Car.airBags()
+    */
+}
+```
+
+## Interface
+![image description](/public/8.png)
+
+```java
+package Interfaces;
+
+public interface Animal{
+
+    int MAX_AGE = 20;
+    public abstract void eat();
+
+    void sleep();
+    // bydeafult all methods of interface are public abstract
+
+    public void info(){
+        System.out.println("info..");
+    }
+    /*
+    ./Interfaces/Animal.java:11: error: interface abstract methods cannot have body
+        public void info(){
+                        ^
+    2 errors
+    */
+
+    public static void info(){
+        System.out.println("info..");
+    }
+
+    public default void run(){
+        System.out.println("Animal is running..");
+    }
+}
+```
+
+```java
+package Interfaces;
+
+public class Dog implements Animal{
+
+    public void eat(){
+        System.out.println("dog is eating..");
+    }
+
+    public void sleep(){
+        System.out.println("dog is sleeping..");
+    }
+}
+```
+
+```java
+import Interfaces.*;
+
+public class Test{
+    public static void main(String[] args){
+        Dog d1 = new Dog();
+        d1.sleep(); // dog is sleeping..
+        System.out.println(d1.MAX_AGE); // 20
+        System.out.println(Animal.MAX_AGE); // 20
+        Animal.info();  // info..
+        Dog.info();
+        /*
+        Test.java:10: error: cannot find symbol
+                Dog.info();
+                ^
+        symbol:   method info()
+        location: class Dog
+        1 error
+        */
+
+       d1.info();
+       /*
+       Test.java:19: error: cannot find symbol
+            d1.info();
+                ^
+        symbol:   method info()
+        location: variable d1 of type Dog
+        1 error
+       */
+
+        Animal.run();
+        /*
+        Test.java:30: error: non-static method run() cannot be referenced from a static context
+                Animal.run();
+                    ^
+        1 error
+        */
+
+        d1.run();   // Animal is running..
+    }
+}
+```
+
+## Multiple Inheritance
+
+```java
+package devices;
+
+public interface Camera{
+    void takePicture();
+}
+```
+
+```java
+package devices;
+
+public interface MusicPlayer{
+    void playMusic();
+    void pauseMusic();
+}
+```
+
+```java
+package devices;
+
+public interface Phone{
+    void makeCall();
+    void endCall();
+}
+```
+
+```java
+package devices;
+
+public class SmartPhone implements Camera, MusicPlayer, Phone{
+    @Override
+    public void takePicture(){
+        System.out.println("Take picture..");
+    }
+
+    @Override
+    public void playMusic(){
+        System.out.println("playMusic..");
+    }
+
+    @Override
+    public void pauseMusic(){
+        System.out.println("pauseMusic..");
+    }
+
+    @Override
+    public void makeCall(){
+        System.out.println("makeCall..");
+    }
+
+    @Override
+    public void endCall(){
+        System.out.println("endCall..");
+    }
+}
+```
+
+```java
+import devices.*;
+
+public class Test{
+    public static void main(String[] args){
+        SmartPhone s1 = new SmartPhone();
+        s1.makeCall();  // makeCall..
+        s1.takePicture();   // TakePicture..
+        s1.endCall();   // endCall..
+    }
+}
+```
+
+## Inner Classes
+![image description](/public/9.png)
+
+### Member Inner Class
+```java
+package innerClasses;
+
+public class Car{
+    private String model;
+    private boolean isEngineOn;
+
+    public Car(String model){
+        this.model = model;
+        this.isEngineOn = false;
+    }
+
+    public void getModel(){
+        System.out.println(this.model);
+    }
+
+    public void getEngineStatus(){
+        System.out.println(this.isEngineOn);
+    }
+
+    public class Engine{
+        public void Start(){
+            if(isEngineOn == false){
+                isEngineOn = true;
+                System.out.printf("%s Engine started..\n", model);
+            }
+            else{
+                System.out.printf("%s Engine is already on..\n", model);
+            }
+        }
+        
+        public void stop(){
+            if(isEngineOn == true){
+                isEngineOn = false;
+                System.out.printf("%s Engine stopped..\n", model);
+            }
+            else{
+                System.out.printf("%s Engine is already off..\n", model);
+            }
+        }
+    }
+}
+```
+
+```java
+import innerClasses.*;
+
+public class Test{
+    public static void main(String[] args){
+        Car c1 = new Car("Range Rover");
+        Car.Engine engine = c1.new Engine();
+        c1.getModel();  // Range Rover
+        c1.getEngineStatus();   // false
+        engine.Start();     // Range Rover Engine started..
+        c1.getEngineStatus();   // true
+    }
+}
+```
+
+### Static Nested Class
+- Video no. 28 pending
+```java
+```
+## Tyeps of ERRORS
+![image description](/public/10.png)
+
+![image description](/public/11.png)
+
+![image description](/public/12.png)
+
+```java
+```
+
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
+
+```java
+```
