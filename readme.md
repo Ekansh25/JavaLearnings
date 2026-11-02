@@ -1405,35 +1405,179 @@ public class Test{
 - Wrapper classes convert primitive data types into objects
 
 ```java
+public class Test{
+    public static void main(String[] args){
+        int a = 1;  // Premitive variable -> stores in Stack memory
+        // Integer b = Integer.valueOf(1); // Autoboxing bydefault can be directly write 
+        Integer b = 1;  // Reference variable -> uses stack memory
+        int x = b;  // Autounboxing
+        Float c = 4.5f;
+        Double d = 43.12;
+        Boolean e = true;
+        Character f = 'a';
+        Byte g = 23;
+        Short h = 3;
+        Long i = 322l;
+
+        System.out.println(Integer.max(2, 4));  // 4
+        System.out.println(Integer.min(2, 4));  // 2
+        System.out.println(Integer.toBinaryString(5));  // 101
+        String str = "3423";
+        Integer strInt = Integer.valueOf(str);
+    }
+}
 ```
 
+## MATH Library
 
 ```java
+public class Test{
+    public static void main(String[] args){
+        int a = 5;
+        int b = 7;
+        System.out.println(Math.max(a, b));     // 7
+        System.out.println(Math.min(a, b));     // 5
+        System.out.println(Math.ceil(1.2));     // 2.0
+        System.out.println(Math.floor(1.2));    // 1.0
+        System.out.println(Math.abs(-11));      // 11
+        System.out.println(Math.round(1.2));    // 1
+        System.out.println(Math.sqrt(25));      // 5.0
+        System.out.println(Math.pow(3, 4));     // 81.0
+        System.out.println(Math.log10(100));    // 2.0
+        System.out.println(Math.log(5));    // 1.6094379...
+        System.out.println(Math.PI);    // 3.141592653589793
+        System.out.println((int) (Math.random() * 10));
+        System.out.println(Math.PI);
+        System.out.println(Math.PI);
+    }
+}
+```
+## ENUM
+- Used where need to define multiple constants
+```java
+public class Test{
+    public static void main(String[] args){
+        System.out.println(Day.MONDAY);     // MONDAY
+        Day monday = Day.MONDAY;
+        System.out.println(monday.ordinal());   // 0 index of MONDAY
+        System.out.println(monday.name());      // MONDAY
+        System.out.println(monday);     // MONDAY
+
+        Day day = Day.MONDAY;
+        String res = switch(day){
+            case MONDAY -> "M";
+            case TUESDAY -> "T";
+            default -> "X";
+        };
+        System.out.println(res);    // M
+    }
+}
+```
+
+## Generic classes
+![image description](/public/13.png)
+```java
+public class Box<T>{
+    private T value;
+
+    public T getValue(){
+        return this.value;
+    }
+
+    public void setValue(T x){
+        this.value = x;
+    }
+}
 ```
 
 ```java
+public class Pair<K, V>{
+    
+    private K key;
+
+    private V value;
+
+    public Pair(K key, V value){
+        this.key = key;
+        this.value = value;
+    }
+
+    public K getKey(){
+        return this.key;
+    }
+
+    public V getValue(){
+        return this.value;
+    }
+}
 ```
 
 ```java
+public class Test{
+    public static void main(String[] args){
+        Box<Integer> b1 = new Box<>();
+        b1.setValue(43);
+        System.out.println(b1.getValue());  // 43
+
+        Pair<String, Integer> p1 = new Pair<>("key", 24);
+        System.out.printf("%s -> %d \n", p1.getKey(), p1.getValue());   // key -> 24 
+    }
+}
+```
+
+### Bounded condition
+```java
+public class Box<T extends Number>{
+    private T value;
+
+    public T getValue(){
+        return this.value;
+    }
+
+    public void setValue(T x){
+        this.value = x;
+    }
+}
 ```
 
 ```java
+public class Test{
+    public static void main(String[] args){
+        Box<String> b1 = new Box<>();
+
+        /*
+            Test.java:3: error: type argument String is not within bounds of type-variable T
+                    Box<String> b1 = new Box<>();
+                        ^
+            where T is a type-variable:
+                T extends Number declared in class Box
+        */
+    }
+}
+```
+
+## Generic constructor of Normal class
+```java
+public class Box{
+
+    public <T extends Number> Box(T x){
+        System.out.println("Generic construtor " + x);
+    }
+
+    public <T> void display(T message){
+        System.out.println("Generic method " + message);
+    }
+
+}
 ```
 
 ```java
-```
-
-```java
-```
-
-```java
-```
-
-```java
-```
-
-
-```java
+public class Test{
+    public static void main(String[] args){
+        Box b1 = new Box(45.4);     // Generic construtor 45
+        b1.display("Hii");  // Generic method Hii
+    }
+}
 ```
 
 ```java
