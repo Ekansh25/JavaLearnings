@@ -1579,11 +1579,179 @@ public class Test{
     }
 }
 ```
+## Collection
+
+![image description](/public/15.png)
+![image description](/public/16.png)
+![image description](/public/17.png)
+
+![image description](/public/18.png)
+
+![image description](/public/19.png)
+
+![image description](/public/20.png)
+
+![image description](/public/21.png)
+
+### List
+![image description](/public/22.png)
+
+![image description](/public/23.png)
+
+![image description](/public/24.png)
+
+### ArrayList
+
+![image description](/public/25.png)
+
 
 ```java
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
+
+public class Test{
+    public static void main(String[] args){
+        ArrayList<Integer> a1 = new ArrayList<Integer>();
+        a1.add(4);
+        a1.add(23);
+        a1.add(80);
+        System.out.println(a1.get(1));  // 23
+        System.out.println(a1.size());  // 3
+        for(Integer i: a1){
+            System.out.println(i);
+        }
+        /*
+            4
+            23
+            28
+        */
+       System.out.println(a1.contains(34)); // false
+       a1.remove(1);    // [4, 80]
+       a1.add(1, 44);   // [4, 44, 80]
+       a1.set(1, 33);   // [4, 33, 80]
+       System.out.println(a1);
+
+       List<Integer> l1 = Arrays.asList(12, 43, 25);
+       System.out.println(l1.getClass().getName());     // java.util.Arrays$ArrayList
+       System.out.println(a1.getClass().getName());     // java.util.ArrayList
+       // No add or remove allowed
+
+       l1.set(2, 99);
+       System.out.println(l1);  // [12, 43, 99]
+
+       List<Integer> l2 = List.of(1,2,3,4);     // Unmodifiable list
+    //    l2.set(2, 88);   // Raise ERROR
+
+       // To make list modifiable
+       ArrayList<Integer> a2 = new ArrayList<>(l2);
+       a2.add(75);
+       System.out.println(a2);      // [1, 2, 3, 4, 75]
+
+        a2.remove(Integer.valueOf(1));
+        System.out.println(a2);     // [2, 3, 4, 75]
+
+    }
+}
 ```
+![image description](/public/26.png)
+![image description](/public/27.png)
+![image description](/public/28.png)
+![image description](/public/29.png)
+![image description](/public/30.png)
 
+### Comparator
 ```java
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
+import java.util.Comparator;
+
+class MyComparator implements Comparator<Integer>{
+
+    @Override
+    public int compare(Integer o1, Integer o2){
+        return o2 - o1;
+    }
+    /*
+    return -1 -> o1 is 1st
+    return 0 -> o1 == o2
+    return 1 -> o2 is 1st
+    */
+}
+
+class MyStringComparator implements Comparator<String>{
+
+    @Override
+    public int compare(String o1, String o2){
+        return o1.length() - o2.length();
+    }
+}
+
+class Student{
+    private String name;
+    private double gpa;
+
+    public Student(String name, double gpa){
+        this.name = name;
+        this.gpa = gpa;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public double getGpa(){
+        return this.gpa;
+    }
+}
+
+class StudentComparator implements Comparator<Student>{
+
+    @Override
+    public int compare(Student s1, Student s2){
+        if( s1.getGpa() - s2.getGpa() < 0 ) return 1;
+        else if( s1.getGpa() - s2.getGpa() > 0 ) return -1;
+        else return 0;
+    }
+}
+
+public class Test{
+    public static void main(String[] args){
+        List<Integer> a1 = new ArrayList<>();
+        a1.add(32);
+        a1.add(21);
+        a1.add(43);
+
+        a1.sort(null);      // [21, 32, 43]
+        a1.sort(new MyComparator());    // [43, 32, 21]
+
+        List<String> a2 = Arrays.asList("banana", "apple", "date");
+        a2.sort(null);      // [apple, banana, date]
+        a2.sort(new MyStringComparator());      // [date, apple, banana]
+        
+        // also can we done using lambda expression
+
+        a2.sort((a, b) -> b.length() - a.length());     // [banana, apple, date]
+
+        List<Student> s1 = new ArrayList<>();
+        s1.add(new Student("Ekansh", 8.5));
+        s1.add(new Student("Tanu", 9.7));
+        s1.add(new Student("Pari", 8.1));
+
+        s1.sort(new StudentComparator());
+
+        for(Student i: s1){
+            System.out.printf("%s -> %f \n", i.getName(), i.getGpa());
+        }
+        /*
+            Tanu -> 9.700000 
+            Ekansh -> 8.500000 
+            Pari -> 8.100000 
+        */
+
+    }
+}
 ```
 
 ```java
